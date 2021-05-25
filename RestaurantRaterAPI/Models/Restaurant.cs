@@ -10,13 +10,28 @@ namespace RestaurantRaterAPI.Models
     {
         [Key]
         public int ID { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Address { get; set; }
-        [Required]
-        public double Rating { get; set; }
 
-        public bool IsRecommended => Rating > 3.5;
+        public virtual List<Rating> Ratings { get; set; } = new List<Rating>();
+
+        public double Rating
+        {
+            get
+            {
+                double totalAverageRating = 0;
+                foreach (Rating rating in Ratings)
+                {
+                    totalAverageRating += rating.AverageRating;
+                }
+                return totalAverageRating / Ratings.Count();
+            }
+        }
+
+        public bool IsRecommended => Rating > 8.5;
     }
 }
