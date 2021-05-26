@@ -14,10 +14,10 @@ namespace RestaurantRaterAPI.Models
 
         [ForeignKey(nameof(Restaurant))] //tie it to another table
         public int RestaurantID { get; set; }
-        public virtual Restaurant Restaurant { get; set; }
+        public virtual Restaurant Restaurant { get; set; } //it returns the correct Restaurant object bc something something magic??
 
         [Required]
-        [Range(0, 10)]
+        [Range(0, 10)] //inclusive
         public double FoodScore { get; set; }
 
         [Required]
