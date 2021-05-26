@@ -1,6 +1,7 @@
 ﻿using RestaurantRaterAPI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,7 +38,30 @@ namespace RestaurantRaterAPI.Controllers
         }
 
         //get all ratings??
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllRatings()
+        {
+            List<Rating> ratings = await _context.Ratings.ToListAsync();
+            return Ok(ratings);
+        }
+
         //get rating by restaurant id??
+        [HttpGet]
+        public async Task<IHttpActionResult> GetByID (int id)
+        {
+            Rating rating = await _context.Ratings.FindAsync(id);
+            if (rating != null) return Ok(rating);
+            return NotFound();
+        }
+
+        //get ratings by restaurant id??
+        [HttpGet]
+        public async Task<IHttpActionResult> GetByRestaurantID (int restaurantID)
+        {
+            Restaurant restaurant = await _context.Restaurants.FindAsync(restaurantID);
+            if (restaurant != null) return Ok(restaurant.Ratings);
+            return NotFound();
+        }
 
 
         //update rating
